@@ -128,7 +128,7 @@ export function LucidSimulation() {
               soundManager.playClick(650, 0.01);
               setActiveStep(idx);
             }}
-            className={`text-left p-2 rounded-md border transition-all ${
+            className={`text-left p-1.5 sm:p-2 rounded-md border transition-all ${
               activeStep === idx
                 ? 'border-[#38bdf8] bg-[#38bdf8]/10 text-[#f3f4f6]'
                 : activeStep > idx
@@ -136,10 +136,10 @@ export function LucidSimulation() {
                 : 'border-[#1f2127] bg-[#101114] text-[#6b7280]'
             }`}
           >
-            <div className="text-[10px] font-mono leading-none mb-1">
+            <div className="text-[9px] sm:text-[10px] font-mono leading-none mb-1">
               Step 0{idx + 1}
             </div>
-            <div className="text-xs font-medium truncate">{s.badge}</div>
+            <div className="text-[11px] sm:text-xs font-medium truncate">{s.badge}</div>
           </button>
         ))}
       </div>

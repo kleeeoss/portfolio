@@ -13,6 +13,10 @@ interface TerminalDrawerProps {
 export function TerminalDrawer({ isOpen, onClose }: TerminalDrawerProps) {
   const [inputVal, setInputVal] = useState('');
   const [isExpanded, setIsExpanded] = useState(false);
+  const [dragOffsetY, setDragOffsetY] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const touchStartY = useRef(0);
+  const currentDragY = useRef(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -28,11 +32,36 @@ export function TerminalDrawer({ isOpen, onClose }: TerminalDrawerProps) {
   // Auto-focus input when opened
   useEffect(() => {
     if (isOpen) {
+      setDragOffsetY(0);
       setTimeout(() => {
         inputRef.current?.focus();
       }, 100);
     }
   }, [isOpen]);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY;
+    currentDragY.current = 0;
+    setIsDragging(true);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    const deltaY = e.touches[0].clientY - touchStartY.current;
+    if (deltaY > 0) {
+      currentDragY.current = deltaY;
+      setDragOffsetY(deltaY);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    if (currentDragY.current > 80) {
+      soundManager.playClick(600, 0.01);
+      onClose();
+    }
+    setDragOffsetY(0);
+    currentDragY.current = 0;
+  };
 
   // Auto-scroll to bottom on new output
   useEffect(() => {
@@ -88,19 +117,34 @@ export function TerminalDrawer({ isOpen, onClose }: TerminalDrawerProps) {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className={`relative w-full bg-[#0a0b0e] border-t md:border-t-0 md:border-l border-[#1f2127] shadow-2xl flex flex-col transition-all duration-300 font-mono ${
+        style={{
+          transform: dragOffsetY > 0 ? `translateY(${dragOffsetY}px)` : undefined,
+          transition: isDragging ? 'none' : 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
+        }}
+        className={`relative w-full bg-[#0a0b0e] border-t md:border-t-0 md:border-l border-[#1f2127] shadow-2xl flex flex-col font-mono ${
           isExpanded
             ? 'h-[85vh] md:w-[750px] md:h-full'
             : 'h-[70vh] md:w-[540px] md:h-full'
         } rounded-t-2xl md:rounded-none overflow-hidden`}
       >
         {/* Mobile Swipe / Drag Handle Indicator */}
-        <div className="md:hidden flex justify-center pt-2 pb-1 bg-[#101114]">
-          <div className="w-10 h-1 rounded-full bg-[#2e323b]" />
+        <div
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          className="md:hidden flex flex-col items-center pt-2.5 pb-2 bg-[#101114] cursor-grab active:cursor-grabbing select-none"
+        >
+          <div className="w-12 h-1.5 rounded-full bg-[#2e323b] hover:bg-[#38bdf8]/60 transition-colors" />
+          <span className="text-[9px] font-mono text-[#6b7280] mt-1">swipe down to dismiss</span>
         </div>
 
         {/* Terminal Header */}
-        <div className="flex items-center justify-between px-4 py-2.5 bg-[#101114] border-b border-[#1f2127] text-xs">
+        <div
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          className="flex items-center justify-between px-4 py-2.5 bg-[#101114] border-b border-[#1f2127] text-xs select-none"
+        >
           <div className="flex items-center gap-2 text-[#9ca3af]">
             <TerminalIcon className="w-4 h-4 text-[#38bdf8]" />
             <span className="font-semibold text-[#f3f4f6]">garv@systems-node:~</span>

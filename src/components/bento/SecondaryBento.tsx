@@ -102,7 +102,7 @@ export function SecondaryBento() {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-lg rounded-xl border border-[#1f2127] bg-[#101114] p-6 shadow-2xl space-y-4"
+            className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-xl border border-[#1f2127] bg-[#101114] p-4 sm:p-6 shadow-2xl space-y-4"
           >
             <div className="flex items-start justify-between gap-3">
               <div>

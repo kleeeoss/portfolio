@@ -25,13 +25,32 @@ export default function Home() {
   const [isCommandOpen, setIsCommandOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
-  // Global keyboard listener for backtick (`) to toggle terminal
+  // Global keyboard listeners for Command Palette (⌘K / Ctrl+K / /) and Terminal (`)
   useEffect(() => {
     const handleGlobalKeyDown = (e: KeyboardEvent) => {
-      // If typing in an input or textarea, don't hijack backtick unless meta/ctrl
       const targetTag = (e.target as HTMLElement)?.tagName?.toLowerCase();
-      if (targetTag === 'input' || targetTag === 'textarea') return;
+      const isInputFocused = targetTag === 'input' || targetTag === 'textarea';
 
+      // ⌘K or Ctrl+K opens/toggles Command Palette from anywhere
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        soundManager.playClick(800, 0.015);
+        setIsCommandOpen((prev) => !prev);
+        return;
+      }
+
+      // If typing inside an input or textarea, don't hijack single keys
+      if (isInputFocused) return;
+
+      // / opens Command Palette when not typing in an input
+      if (e.key === '/') {
+        e.preventDefault();
+        soundManager.playClick(800, 0.015);
+        setIsCommandOpen(true);
+        return;
+      }
+
+      // ` or ~ toggles Developer Terminal
       if (e.key === '`' || e.key === '~') {
         e.preventDefault();
         soundManager.playClick(720, 0.02);

@@ -40,45 +40,57 @@ export function ContactTerminal() {
     setIsSubmitting(true);
     soundManager.playClick(800, 0.02);
 
-    try {
-      // Free Web3Forms / mailto client dispatch
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          access_key: 'b94e411b-7c73-455b-8610-ea19665f2991', // Standard free Web3Forms token
-          name: name || 'Recruiter / Engineering Leader',
-          email: email,
-          subject: subject || 'Portfolio Inquiry / Systems Opportunity',
-          message: message,
-          to_email: PERSONAL_INFO.email,
-        }),
-      });
+    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
 
-      if (response.ok) {
-        setSubmitted(true);
-        soundManager.playSuccess();
-        toast('Message Transmitted', 'Your transmission was routed to garvvaidya24@outlook.com', 'success');
-      } else {
-        throw new Error('Web3Forms fallback triggered');
+    if (accessKey) {
+      try {
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            access_key: accessKey,
+            name: name || 'Recruiter / Engineering Leader',
+            email: email,
+            subject: subject || 'Portfolio Inquiry / Systems Opportunity',
+            message: message,
+            to_email: PERSONAL_INFO.email,
+          }),
+        });
+
+        const data = await response.json();
+        if (response.ok && data?.success) {
+          setSubmitted(true);
+          soundManager.playSuccess();
+          toast('Message Transmitted', `Your message was delivered to ${PERSONAL_INFO.email}`, 'success');
+          setIsSubmitting(false);
+          return;
+        }
+      } catch {
+        // Fall back to client-side mailto dispatch
       }
-    } catch {
-      // Seamless client-side fallback to direct mailto protocol
-      const mailtoUrl = `mailto:${PERSONAL_INFO.email}?subject=${encodeURIComponent(
-        subject || 'Systems Engineering Opportunity'
-      )}&body=${encodeURIComponent(
-        `From: ${name} (${email})\n\nMessage:\n${message}`
-      )}`;
-      window.location.href = mailtoUrl;
-      setSubmitted(true);
-      soundManager.playSuccess();
-      toast('Mail Client Dispatched', 'Opening default mail application with prefilled message.', 'success');
-    } finally {
-      setIsSubmitting(false);
     }
+
+    // Direct mailto protocol with draft backup to clipboard
+    const mailtoUrl = `mailto:${PERSONAL_INFO.email}?subject=${encodeURIComponent(
+      subject || 'Systems Engineering Opportunity'
+    )}&body=${encodeURIComponent(
+      `From: ${name || 'Engineering Recruiter'} (${email})\n\nMessage:\n${message}`
+    )}`;
+
+    try {
+      await navigator.clipboard.writeText(
+        `To: ${PERSONAL_INFO.email}\nSubject: ${subject || 'Systems Engineering Opportunity'}\n\n${message}`
+      );
+    } catch {}
+
+    window.location.href = mailtoUrl;
+    setSubmitted(true);
+    soundManager.playSuccess();
+    toast('Mail Client Dispatched', `Opening mail client to ${PERSONAL_INFO.email}. Draft also copied to clipboard.`, 'success');
+    setIsSubmitting(false);
   };
 
   return (

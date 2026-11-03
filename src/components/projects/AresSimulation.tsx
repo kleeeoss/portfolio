@@ -7,7 +7,6 @@ import { soundManager } from '@/lib/audio';
 
 export function AresSimulation() {
   const [query, setQuery] = useState('container sandbox isolation');
-  const [calcTimeMs, setCalcTimeMs] = useState(0.42);
   const [dnsTtl, setDnsTtl] = useState(5.0);
 
   // Dynamic CoreDNS TTL countdown simulation
@@ -21,14 +20,17 @@ export function AresSimulation() {
     return () => clearInterval(timer);
   }, []);
 
-  // Compute live BLAS GEMV dot products
-  const { results, queryVec } = useMemo(() => {
+  // Compute live BLAS GEMV dot products purely without side effects
+  const { results, queryVec, calcTimeMs } = useMemo(() => {
     const t0 = typeof performance !== 'undefined' ? performance.now() : Date.now();
     const qVec = queryToVector(query);
     const ranked = computeBlasGemv(qVec);
     const t1 = typeof performance !== 'undefined' ? performance.now() : Date.now();
-    setCalcTimeMs(Number(Math.max(0.12, t1 - t0).toFixed(2)));
-    return { results: ranked, queryVec: qVec };
+    return {
+      results: ranked,
+      queryVec: qVec,
+      calcTimeMs: Number(Math.max(0.12, t1 - t0).toFixed(2)),
+    };
   }, [query]);
 
   const presetQueries = [

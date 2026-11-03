@@ -31,16 +31,17 @@ export function CommandPalette({ isOpen, onClose, onOpenTerminal }: CommandPalet
   const [search, setSearch] = useState('');
   const { toast } = useToast();
 
-  // Listen to keyboard shortcut (⌘K / Ctrl+K / /)
+  // Reset search when opened
+  useEffect(() => {
+    if (isOpen) {
+      setSearch('');
+    }
+  }, [isOpen]);
+
+  // Listen to Escape key to dismiss
   useEffect(() => {
     const handleKeyDown = (e: globalThis.KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault();
-        soundManager.playClick(800, 0.015);
-        if (isOpen) {
-          onClose();
-        }
-      } else if (e.key === 'Escape' && isOpen) {
+      if (e.key === 'Escape' && isOpen) {
         onClose();
       }
     };

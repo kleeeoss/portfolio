@@ -109,18 +109,18 @@ export function SyncNoteSim() {
               </span>
             </div>
 
-            <div className="grid grid-cols-5 sm:grid-cols-10 gap-2 mb-4">
+            <div className="grid grid-cols-5 sm:grid-cols-10 gap-1.5 sm:gap-2 mb-4">
               {sockets.map((st, idx) => (
                 <div
                   key={idx}
-                  className={`p-2 rounded border text-center transition-all ${
+                  className={`p-1 sm:p-2 rounded border text-center transition-all ${
                     st === 'BUSY'
                       ? 'bg-[#38bdf8]/20 border-[#38bdf8] text-[#38bdf8]'
                       : 'bg-[#08080a] border-[#10b981]/40 text-[#10b981]'
                   }`}
                 >
-                  <div className="text-[9px] font-mono text-[#6b7280]">SOCK #{idx + 1}</div>
-                  <div className="text-[10px] font-mono font-bold mt-0.5">
+                  <div className="text-[8px] sm:text-[9px] font-mono text-[#6b7280]">SOCK #{idx + 1}</div>
+                  <div className="text-[9px] sm:text-[10px] font-mono font-bold mt-0.5">
                     {st === 'BUSY' ? 'BUSY' : 'IDLE'}
                   </div>
                 </div>

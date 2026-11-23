@@ -14,7 +14,7 @@ export function LucidSimulation() {
     {
       title: '1. Source Ingestion',
       badge: 'HTTP Ingest',
-      description: 'Untrusted user input payload ingested into AST parser buffer via `req.Body.Input`.',
+      description: 'Untrusted user input payload ingested into AST parser buffer via `r.URL.Query().Get("user_script")`.',
       code: 'payload := r.URL.Query().Get("user_script")\n// Raw string token in memory buffer',
       status: 'UNTRUSTED INPUT',
       statusColor: 'text-[#f59e0b]',
@@ -29,7 +29,7 @@ export function LucidSimulation() {
     },
     {
       title: '3. Vulnerable Sink',
-      badge: 'os.Exec Sink',
+      badge: 'os/exec Sink',
       description: 'Tainted node reaches command execution sink `exec.Command("sh", "-c", cmd)`.',
       code: 'cmd := exec.Command("/bin/sh", "-c", payload)\n// CRITICAL: Unchecked execution path reached',
       status: 'EXPLOIT TRIGGER ATTEMPT',

@@ -70,7 +70,7 @@ export function HeroSection({ onOpenCommandPalette, onToggleTerminal }: HeroSect
             Hi, I&apos;m <span className="text-[#f3f4f6] font-semibold">Garv Vaidya</span> (<span className="font-mono text-[#38bdf8]">@kleeeoss</span>).
             I architect deterministic systems infrastructure: pure-Go Tree-sitter AST taint analyzers,
             Google gVisor <code className="font-mono text-xs px-1.5 py-0.5 rounded bg-[#101114] border border-[#1f2127] text-[#38bdf8]">runsc</code> isolation
-            sandboxes with 0 host escapes, disaggregated Kubernetes vector retrieval with BLAS Level-2 GEMV (<span className="font-mono text-xs text-[#38bdf8]">s = Mq</span>),
+            sandboxes with 0 host escapes, disaggregated Kubernetes vector retrieval with L2-normalized 384-d embeddings and vectorized NumPy search,
             and asynchronous Kahn DAG orchestrators.
           </p>
 
@@ -88,10 +88,10 @@ export function HeroSection({ onOpenCommandPalette, onToggleTerminal }: HeroSect
             <div className="p-3 rounded-lg border border-[#1f2127] bg-[#101114]/80 backdrop-blur-sm">
               <div className="flex items-center gap-1.5 text-xs text-[#6b7280] font-mono mb-1">
                 <Cpu className="w-3.5 h-3.5 text-[#38bdf8]" />
-                <span>Dense Vector Search</span>
+                <span>Vector Search Latency</span>
               </div>
-              <div className="text-xl sm:text-2xl font-bold font-mono text-[#38bdf8]">596.8 ms</div>
-              <div className="text-[11px] text-[#9ca3af] font-mono">p95 BLAS GEMV retrieval</div>
+              <div className="text-xl sm:text-2xl font-bold font-mono text-[#38bdf8]">596.81 ms</div>
+              <div className="text-[11px] text-[#9ca3af] font-mono leading-tight">e2e p95 incl. Vertex AI HyDE</div>
             </div>
 
             <div className="p-3 rounded-lg border border-[#1f2127] bg-[#101114]/80 backdrop-blur-sm">

@@ -17,11 +17,11 @@ export function BenchmarkMatrix() {
               </span>
             </div>
             <h2 id="invariants-heading" className="text-2xl sm:text-4xl font-bold tracking-tight text-[#f3f4f6]">
-              Verified Empirical Benchmarks
+              Architecture & Engineering Guarantees
             </h2>
           </div>
           <p className="text-sm text-[#9ca3af] max-w-md">
-            Strict empirical measurements from production AWS EC2, Kubernetes clusters, and container sandboxes. No unverified claims.
+            Architectural proofs, algorithmic complexities, and empirical telemetry across sandbox runtimes, distributed clusters, and isolation boundaries.
           </p>
         </div>
 
@@ -30,7 +30,7 @@ export function BenchmarkMatrix() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <caption className="sr-only">
-                Verified Empirical Benchmarks and Systems Invariants Table
+                Architecture and Engineering Guarantees Table
               </caption>
               <thead>
                 <tr className="border-b border-[#1f2127] bg-[#0c0d10] text-[11px] font-mono uppercase tracking-wider text-[#6b7280]">

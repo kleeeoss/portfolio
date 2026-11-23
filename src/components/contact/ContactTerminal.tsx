@@ -101,13 +101,13 @@ export function ContactTerminal() {
           <div className="text-center mb-10">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#38bdf8]/30 bg-[#38bdf8]/10 text-xs font-mono text-[#38bdf8] mb-3">
               <Mail className="w-3.5 h-3.5" />
-              <span>Direct In-Site Transmission</span>
+              <span>Direct Message</span>
             </div>
             <h2 id="contact-heading" className="text-3xl sm:text-4xl font-bold tracking-tight text-[#f3f4f6] mb-3">
               Contact Garv Vaidya
             </h2>
             <p className="text-sm text-[#9ca3af] max-w-xl mx-auto leading-relaxed">
-              Open to Software Engineering, Systems, and AI Infrastructure roles. Send a direct transmission below or copy contact coordinates in 1-click.
+              Open to Software Engineering, Systems, and AI Infrastructure roles. Send a direct message below or copy my email in 1-click.
             </p>
           </div>
 
@@ -189,7 +189,7 @@ export function ContactTerminal() {
                     <CheckCircle2 className="w-8 h-8" />
                   </div>
                   <h3 className="text-xl font-bold text-[#f3f4f6]">
-                    Transmission Received
+                    Message Received
                   </h3>
                   <p className="text-xs sm:text-sm text-[#9ca3af] max-w-sm mx-auto leading-relaxed">
                     Thank you for reaching out. Your message has been routed directly to Garv Vaidya. Expect a response shortly.
@@ -201,7 +201,7 @@ export function ContactTerminal() {
                     }}
                     className="touch-target inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[#1f2127] text-xs font-mono text-[#9ca3af] hover:text-[#f3f4f6]"
                   >
-                    Send Another Transmission
+                    Send Another Message
                   </button>
                 </div>
               ) : (
@@ -216,7 +216,7 @@ export function ContactTerminal() {
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        placeholder="e.g. Alex (Engineering Recruiter)"
+                        placeholder="e.g. Alex (Recruiter)"
                         className="touch-target w-full px-3 py-2.5 rounded-lg border border-[#1f2127] bg-[#0c0d10] text-xs sm:text-sm text-[#f3f4f6] placeholder-[#6b7280] focus:border-[#38bdf8] focus:outline-none transition-all font-mono"
                       />
                     </div>
@@ -277,7 +277,7 @@ export function ContactTerminal() {
                       className="touch-target inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-[#38bdf8] text-[#08080a] font-mono font-medium text-xs hover:bg-[#38bdf8]/90 transition-all disabled:opacity-50 active:scale-95 shadow-md shadow-[#38bdf8]/10"
                     >
                       <Send className="w-3.5 h-3.5" />
-                      <span>{isSubmitting ? 'Transmitting...' : 'Send Transmission'}</span>
+                      <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
                     </button>
                   </div>
                 </form>

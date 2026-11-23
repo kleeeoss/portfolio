@@ -54,8 +54,9 @@ test('2. Flagship Systems Specification', () => {
 });
 
 test('3. Secondary Bento Projects & Negative Invariant (Zero xqv9k)', () => {
-  assert.equal(SECONDARY_PROJECTS.length, 7, 'Must have exactly 7 secondary projects');
+  assert.equal(SECONDARY_PROJECTS.length, 8, 'Must have exactly 8 secondary projects');
   const expectedNames = [
+    'job-harvester',
     'mock-vulnerable-repo',
     'oblivion',
     'veritas',

@@ -116,7 +116,7 @@ export function ProjectCard({ project, children, simulationTitle }: ProjectCardP
               )}
             </div>
             {m.benchmarkContext && (
-              <span className="text-[10px] text-[#9ca3af] font-mono truncate" title={m.benchmarkContext}>
+              <span className="text-[10px] text-[#9ca3af] font-mono leading-tight" title={m.benchmarkContext}>
                 {m.benchmarkContext}
               </span>
             )}

@@ -30,7 +30,7 @@ export function Navbar({ onOpenCommandPalette, onToggleTerminal }: NavbarProps) 
     { label: 'Flagships', href: '#flagships' },
     { label: 'Simulations', href: '#simulations' },
     { label: 'Invariants', href: '#invariants' },
-    { label: 'Bento Grid', href: '#bento' },
+    { label: 'More Projects', href: '#bento' },
     { label: 'Contact', href: '#contact' },
   ];
 

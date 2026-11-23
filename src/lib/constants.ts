@@ -34,7 +34,7 @@ export const FLAGSHIP_PROJECTS: FlagshipProject[] = [
     tagline: 'AI-Native DevSecOps Platform & Dynamic Sandbox',
     description:
       'Enterprise-grade DevSecOps continuous integration platform and dynamic execution engine that detects hallucinated dependencies, insecure code patterns, and executes untrusted code inside hardened user-space kernel sandboxes.',
-    deploymentBadge: 'Deployed on AWS EC2',
+    deploymentBadge: 'AWS EC2 • gVisor',
     githubUrl: 'https://github.com/kleeeoss/project-lucid',
     techStack: [
       'Go',
@@ -90,7 +90,7 @@ export const FLAGSHIP_PROJECTS: FlagshipProject[] = [
     tagline: 'Disaggregated Cloud-Native Vector Search Engine',
     description:
       'A disaggregated, horizontally scalable vector database and AI memory backend engineered for low-latency dense retrieval across Kubernetes compute shards.',
-    deploymentBadge: 'Deployed on Kubernetes',
+    deploymentBadge: 'Kubernetes • HPA',
     githubUrl: 'https://github.com/kleeeoss/project-ares',
     techStack: [
       'Python 3.12',
@@ -103,23 +103,23 @@ export const FLAGSHIP_PROJECTS: FlagshipProject[] = [
       'BLAS Level-2 GEMV',
     ],
     keyInvariants: [
-      'Hardware BLAS Level-2 GEMV s = Mq',
+      'L2-normalized 384-d embeddings with vectorized NumPy search',
       'Unit L2 Norm Invariant Enforcement',
-      'p95 = 596.81ms Query Latency',
+      'p95 = 596.81ms End-to-End Latency',
       'Non-blocking 5.0s CoreDNS TTL Cache',
     ],
     metrics: [
       {
-        label: 'p95 Query Latency',
+        label: 'End-to-End p95 Latency',
         value: '596.81 ms',
         verified: true,
-        benchmarkContext: 'Under concurrent load (50 reqs, 5 clients)',
+        benchmarkContext: 'Including Vertex AI HyDE LLM round-trip',
       },
       {
         label: 'Retrieval Algorithm',
-        value: 'BLAS GEMV',
+        value: 'Vectorized NumPy',
         verified: true,
-        benchmarkContext: 's = Mq on 384-d normalized embeddings',
+        benchmarkContext: 'L2-normalized 384-d embeddings with vectorized NumPy search',
       },
       {
         label: 'DNS Cache TTL',
@@ -136,7 +136,7 @@ export const FLAGSHIP_PROJECTS: FlagshipProject[] = [
     ],
     highlights: [
       'Disaggregated Coordinator-Shard Topology decoupling an asynchronous FastAPI coordinator from stateless worker shards via Kubernetes headless services and dynamic CoreDNS caching.',
-      'Hardware-Accelerated BLAS GEMV Retrieval vectorizing cosine similarity over 384-dimensional dense embeddings (all-MiniLM-L6-v2), collapsing search queries to matrix-vector products.',
+      'Vectorized Dense Retrieval with L2-normalized 384-d embeddings and vectorized NumPy search (all-MiniLM-L6-v2), collapsing search queries to matrix-vector products.',
       'Coordinator-Isolated HyDE & Atomic Snapshots integrating Vertex AI query expansion and atomic .npz index snapshotting (POSIX atomic renames) to node-local emptyDir mounts.',
     ],
   },
@@ -202,7 +202,7 @@ export const FLAGSHIP_PROJECTS: FlagshipProject[] = [
     tagline: 'Multi-Tenant Cloud Note Service',
     description:
       'A secure, containerized multi-tenant persistence backend engineered for low-latency synchronization and strict tenant boundary isolation.',
-    deploymentBadge: 'Deployed on AWS EC2 + RDS',
+    deploymentBadge: 'AWS EC2 • RDS',
     githubUrl: 'https://github.com/kleeeoss/syncnote-api',
     techStack: [
       'Python',
@@ -217,7 +217,7 @@ export const FLAGSHIP_PROJECTS: FlagshipProject[] = [
     keyInvariants: [
       'Bounded Connection Pool (1-10 Sockets)',
       'Sub-50ms Query Latency',
-      'Compound SQL IDOR Protection',
+      'Tenant-scoped parameterized SQL (IDOR safe)',
       'Scrypt Key Derivation N=32768',
     ],
     metrics: [
@@ -225,13 +225,13 @@ export const FLAGSHIP_PROJECTS: FlagshipProject[] = [
         label: 'DB Persistence Latency',
         value: '< 50 ms',
         verified: true,
-        benchmarkContext: 'Bounded connection pool eliminates TLS handshakes',
+        benchmarkContext: 'Zero TCP/TLS handshake overhead',
       },
       {
         label: 'Tenant Isolation',
         value: 'Protected',
         verified: true,
-        benchmarkContext: 'WHERE id = %s AND user_id = %s compound SQL',
+        benchmarkContext: 'Tenant-scoped parameterized SQL (IDOR safe)',
       },
       {
         label: 'Key Derivation',
@@ -249,12 +249,23 @@ export const FLAGSHIP_PROJECTS: FlagshipProject[] = [
     highlights: [
       'AWS Cloud Architecture deployed on AWS EC2 served by Gunicorn and connected to a managed AWS RDS PostgreSQL 16 instance over VPC security groups with dual-mode 12-factor DSN.',
       'Bounded Connection Pooling utilizing process-level pooling via psycopg2 (1–10 sockets), eliminating per-request TCP handshakes and TLS renegotiation to achieve sub-50ms responses.',
-      'Tenant Isolation & Zero-Secret Rootfs enforcing Scrypt password hashing (N=32768), stateless JWT tokens, compound SQL IDOR prevention, and verified container rootfs isolation.',
+      'Tenant Isolation & Zero-Secret Rootfs enforcing Scrypt password hashing (N=32768), stateless JWT tokens, Tenant-scoped parameterized SQL (IDOR safe), and verified container rootfs isolation.',
     ],
   },
 ];
 
 export const SECONDARY_PROJECTS: SecondaryProject[] = [
+  {
+    id: 'job-harvester',
+    name: 'job-harvester',
+    domain: 'Distributed Ingestion & ATS Intelligence',
+    description:
+      'High-throughput asynchronous job harvester querying 11 public ATS APIs (Ashby, Greenhouse, Lever, Workday) and 4 live remote feeds, enforcing strict 0–100 stack scoring and SQLite WAL persistence.',
+    githubUrl: 'https://github.com/kleeeoss/job-harvester',
+    techStack: ['Python', 'AsyncIO', 'httpx', 'SQLite (WAL)', 'Multi-ATS APIs', 'Pytest'],
+    architectureNotes:
+      'Engineered with SQLite WAL statefulness, composite deduplication, concurrency semaphores, anti-monopoly company capping, and 112 automated unit tests.',
+  },
   {
     id: 'mock-vulnerable-repo',
     name: 'mock-vulnerable-repo',
@@ -354,9 +365,9 @@ export const EMPIRICAL_INVARIANTS: EmpiricalInvariant[] = [
   {
     id: 'inv-3',
     system: 'Ares',
-    evaluatedInvariant: 'Dense Vector Retrieval Latency',
+    evaluatedInvariant: 'Vector Search End-to-End Latency',
     benchmarkMetric: 'p95 = 596.81 ms',
-    verificationMechanism: 'Hardware BLAS Level-2 GEMV (s = Mq) on 384-d normalized embeddings',
+    verificationMechanism: 'End-to-end p95 including Vertex AI HyDE LLM round-trip with vectorized NumPy search',
     status: 'VERIFIED',
   },
   {
@@ -396,7 +407,7 @@ export const EMPIRICAL_INVARIANTS: EmpiricalInvariant[] = [
     system: 'SyncNote',
     evaluatedInvariant: 'Tenant Boundary & Auth',
     benchmarkMetric: 'IDOR Protected',
-    verificationMechanism: 'Scrypt (N=32768), stateless JWT tokens, compound SQL WHERE id=%s AND user_id=%s',
+    verificationMechanism: 'Scrypt (N=32768), stateless JWT tokens, Tenant-scoped parameterized SQL (IDOR safe)',
     status: 'VERIFIED',
   },
 ];

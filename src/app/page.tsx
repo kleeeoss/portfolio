@@ -16,7 +16,7 @@ import { TerminalDrawer } from '@/components/terminal/TerminalDrawer';
 import { CommandPalette } from '@/components/command-menu/CommandPalette';
 import { ToastProvider } from '@/components/common/Toast';
 import { FLAGSHIP_PROJECTS, PERSONAL_INFO } from '@/lib/constants';
-import { Terminal as TerminalIcon, Shield, Mail, ArrowUp } from 'lucide-react';
+import { Shield, Mail, ArrowUp } from 'lucide-react';
 import { GithubIcon as Github, LinkedinIcon as Linkedin } from '@/components/common/Icons';
 import { soundManager } from '@/lib/audio';
 
@@ -231,9 +231,9 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* Floating Bottom-Right CLI Launcher Pill */}
-      <div className="fixed bottom-4 right-4 z-30 flex items-center gap-2">
-        {showScrollTop && (
+      {/* Floating Bottom-Right Scroll-To-Top Button */}
+      {showScrollTop && (
+        <div className="fixed bottom-4 right-4 z-30">
           <button
             onClick={() => {
               soundManager.playClick(600, 0.01);
@@ -244,24 +244,8 @@ export default function Home() {
           >
             <ArrowUp className="w-4 h-4" />
           </button>
-        )}
-
-        <button
-          onClick={() => {
-            soundManager.playClick(720, 0.02);
-            setIsTerminalOpen(true);
-          }}
-          className="touch-target flex items-center gap-2 px-3 py-2 rounded-full border border-[#1f2127] bg-[#101114]/90 backdrop-blur-md hover:border-[#38bdf8] text-[#9ca3af] hover:text-[#38bdf8] transition-all shadow-xl font-mono text-xs"
-          aria-label="Open Interactive Systems Terminal (~)"
-          title="Open Terminal (~)"
-        >
-          <TerminalIcon className="w-4 h-4 text-[#38bdf8]" />
-          <span className="hidden sm:inline">&gt;_ Terminal</span>
-          <kbd className="px-1.5 py-0.5 rounded bg-[#1a1c23] border border-[#2e323b] text-[#6b7280] text-[10px]">
-            ~
-          </kbd>
-        </button>
-      </div>
+        </div>
+      )}
 
       {/* Developer Terminal Slide-Out Drawer */}
       <TerminalDrawer

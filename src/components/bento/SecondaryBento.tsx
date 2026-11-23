@@ -35,7 +35,7 @@ export function SecondaryBento() {
               </span>
             </div>
             <h2 id="bento-heading" className="text-2xl sm:text-4xl font-bold tracking-tight text-[#f3f4f6]">
-              Secondary Engineering Bento Grid
+              Systems & Tooling
             </h2>
           </div>
           <p className="text-sm text-[#9ca3af] max-w-md">
@@ -52,7 +52,9 @@ export function SecondaryBento() {
                 soundManager.playClick(700, 0.01);
                 setSelectedProject(proj);
               }}
-              className="group relative p-5 rounded-xl border border-[#1f2127] bg-[#101114] hover:bg-[#16181d] hover:border-[#2e323b] transition-all cursor-pointer flex flex-col justify-between"
+              className={`group relative p-5 rounded-xl border border-[#1f2127] bg-[#101114] hover:bg-[#16181d] hover:border-[#2e323b] transition-all cursor-pointer flex flex-col justify-between ${
+                proj.id === 'job-harvester' ? 'md:col-span-2' : ''
+              }`}
             >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-3">

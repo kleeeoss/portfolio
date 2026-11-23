@@ -152,7 +152,7 @@ export function CommandPalette({ isOpen, onClose, onOpenTerminal }: CommandPalet
                 className="flex items-center gap-2.5 px-3 py-2 rounded-lg cursor-pointer hover:bg-[#16181d] text-[#f3f4f6] transition-colors"
               >
                 <Grid className="w-4 h-4 text-[#9ca3af]" />
-                <span>Secondary Systems Bento Grid</span>
+                <span>Systems & Tooling (More Projects)</span>
               </Command.Item>
 
               <Command.Item

@@ -83,12 +83,14 @@ export function CertificationsSection() {
             </div>
           </div>
 
+          {/* Cumulative CGPA callout commented out to match updated resume
           <div className="sm:text-right shrink-0">
             <div className="text-[11px] font-mono text-[#6b7280] uppercase">Cumulative CGPA</div>
             <div className="text-xl sm:text-2xl font-bold font-mono text-[#10b981]">
               {PERSONAL_INFO.education.cgpa}
             </div>
           </div>
+          */}
         </div>
       </div>
     </section>
